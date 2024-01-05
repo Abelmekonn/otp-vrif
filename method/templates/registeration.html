@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>User Registration</h2>
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger">{{ message }}</div>
+{% endfor %}
+{% endif %}
+
+<form method="post" action="{% url 'user_registration' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    {% if otp_required %}
+    <div class="form-group">
+        <label for="id_otp">OTP:</label>
+        <input type="text" id="id_otp" name="otp" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Verify OTP</button>
+    {% else %}
+    <button type="submit" class="btn btn-primary">Generate OTP</button>
+    {% endif %}
+</form>
+{% endblock %}
